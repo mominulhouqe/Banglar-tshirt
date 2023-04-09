@@ -3,14 +3,15 @@ import { useLoaderData } from 'react-router-dom';
 import TShirt from '../T-Shirt/TShirt';
 import Cart from '../Cart/Cart';
 import './Home.css'
-import { ToastContainer, toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const Home = () => {
     const tshirts = useLoaderData();
     const [cart, setCart] = useState([]);
-    const handleAddToCart = tshirt =>{
-        const exists = cart.find(ts=>ts._id === tshirt._id);
-        if(exists){
+    
+    const handleAddToCart = tshirt => {
+        const exists = cart.find(ts => ts._id === tshirt._id);
+        if (exists) {
             toast('you have already added')
 
         }
@@ -19,34 +20,34 @@ const Home = () => {
         setCart(newCart);
 
     }
-    const handleRemoveFromCart =id =>{
-        const remaining =cart.filter(ts=>ts._id !== id);
+    const handleRemoveFromCart = id => {
+        const remaining = cart.filter(ts => ts._id !== id);
         setCart(remaining);
     }
     return (
         <div className='home-container'>
-         <div className='tshirt-container'>
-         {
-                tshirts.map(tshirt=> <TShirt
-                key={tshirt._id}
-                tshirt={tshirt}
-                handleAddToCart= {handleAddToCart}
-                
+            <div className='tshirt-container'>
+                {
+                    tshirts.map(tshirt => <TShirt
+                        key={tshirt._id}
+                        tshirt={tshirt}
+                        handleAddToCart={handleAddToCart}
+
+                    >
+
+                    </TShirt>)
+                }
+            </div>
+            <div className="cart-container">
+                <Cart
+                    cart={cart}
+                    handleRemoveFromCart={handleRemoveFromCart}
+
                 >
 
-                </TShirt>)
-            }
-         </div>
-         <div className="cart-container">
-            <Cart
-             cart={cart}
-             handleRemoveFromCart={handleRemoveFromCart}
-             
-             >
 
-
-            </Cart>
-         </div>
+                </Cart>
+            </div>
         </div>
     );
 };
